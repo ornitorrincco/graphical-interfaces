@@ -1,2 +1,2 @@
-src = "C:\Users\shore\Downloads\pdf archivos 2\pdfs"
-dist = "C:\Users\shore\Desktop\Proyectos\Luis-Sotelo\clientes"
+src = ""
+dist = ""
