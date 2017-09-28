@@ -5,7 +5,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 matplotlib.use('TkAgg')
 
 from tkinter import *
-from ttk import *
+from tkinter.ttk import *
 
 def graph(text):
     tmptext = entry.get()
