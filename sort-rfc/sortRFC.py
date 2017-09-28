@@ -28,9 +28,9 @@ class Example(QtGui.QWidget):
         self.srcDirEdit = QtGui.QLabel(self.src)
         self.distDirEdit = QtGui.QLabel(self.dist)
         self.buttonChangeScr = QtGui.QPushButton('Cambiar', self)
-        self.buttonChangeScr.clicked.connect(self.CambiarDirScr)
+        self.buttonChangeScr.clicked.connect(self.cambiarDirScr)
         self.buttonChangeDist = QtGui.QPushButton('Cambiar', self)
-        self.buttonChangeDist.clicked.connect(self.CambiarDirDist)
+        self.buttonChangeDist.clicked.connect(self.cambiarDirDist)
 
         self.grid = QtGui.QGridLayout()
         self.grid.setSpacing(2)
@@ -52,12 +52,12 @@ class Example(QtGui.QWidget):
         self.buttonCancelar.move(lineOfButtonsX + 100, lineOfButtonsY)
         self.buttonCancelar.clicked.connect(QtCore.QCoreApplication.instance().quit)
         self.buttonSort.clicked.connect(
-            self.Ordenador)  # if you want to pass a param you need to put lambda:self.prueba('pdf')
+            self.ordenador)  # if you want to pass a param you need to put lambda:self.prueba('pdf')
         self.setGeometry(200, 200, 400, 200)
         self.setWindowTitle('Ordenador de Archivos')
         self.show()
 
-    def CambiarDirDist(self):
+    def cambiarDirDist(self):
         text, ok = QtGui.QInputDialog.getText(self, 'Carpeta destino',
                                               'Inserte directorio de carpeta destino:')
         if ok:
@@ -66,7 +66,7 @@ class Example(QtGui.QWidget):
                 self.readScrTxt()
                 self.distDirEdit.setText(str(text))
 
-    def CambiarDirScr(self):
+    def cambiarDirScr(self):
         text, ok = QtGui.QInputDialog.getText(self, 'Carpeta origen',
                                               'Inserte directorio de carpeta origen:')
         if ok:
@@ -128,7 +128,7 @@ class Example(QtGui.QWidget):
         # getRFC ya compara los RFC por Regex, solo es necesario pasarle un string con los rfc
         return RFCEmisor + ' ' + RFCReceptor
 
-    def RFCClientes(self):
+    def rFCClientes(self):
         rFCClientes = []
         os.chdir(self.dist)
         for archivo in os.listdir('.'):
@@ -141,7 +141,7 @@ class Example(QtGui.QWidget):
     # (text, filename):
     def getRFC(self, text):
         # extrae todos los RFC
-        clientes = self.RFCClientes()
+        clientes = self.rFCClientes()
         for rFC in clientes:
             # (pattern,string,flag)
             cliente = re.search(rFC, text)
@@ -151,15 +151,15 @@ class Example(QtGui.QWidget):
             # en caso de no encontrarlo
         return ''
 
-    def Ordenador(self):
-        self.FileMover('pdf')
-        self.FileMover('xml')
-        self.ShowFinish()
+    def ordenador(self):
+        self.fileMover('pdf')
+        self.fileMover('xml')
+        self.showFinish()
 
-    def FileMover(self, extension):
+    def fileMover(self, extension):
         # diccionario que guardara el nombre del archivo y a que cliente le pertence
         registro = {}
-        clientes = self.RFCClientes()
+        clientes = self.rFCClientes()
         # crea un diccionario de dos niveles con todos los RFC de los directorios
         for cliente in clientes:
             registro[cliente] = []
@@ -187,9 +187,9 @@ class Example(QtGui.QWidget):
         try:
             os.rename(src, dist)
         except:
-            self.ShowError(filename, RFCName)
+            self.showError(filename, RFCName)
 
-    def ShowError(self, filename, RFCName):
+    def showError(self, filename, RFCName):
         problema = 'ya existe: ' + filename + ' en ' + self.dist + '\\' + RFCName
         problemaMsg = QtGui.QLabel(problema)
         ventanaError = QtGui.QDialog()
@@ -202,7 +202,7 @@ class Example(QtGui.QWidget):
         ventanaError.setWindowTitle('Error, archivo ya existente')
         ventanaError.exec_()
 
-    def ShowFinish(self):
+    def showFinish(self):
         finalizacion = 'Se han transladado todos los archivos posibles'
         problemaMsg = QtGui.QLabel(finalizacion)
         ventanaFinal = QtGui.QDialog()
